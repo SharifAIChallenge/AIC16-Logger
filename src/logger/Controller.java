@@ -26,7 +26,7 @@ public class Controller {
     private long retryDelay;
     private String logPath, resultPath;
     private FileOutputStream logOut, resultOut;
-    private int score0, score1;
+    private double score0, score1;
 
     private Network network;
 
@@ -68,7 +68,7 @@ public class Controller {
             }
             logOut.close();
             resultOut = new FileOutputStream(resultPath);
-            resultOut.write(String.format("%s %s\n", score0, score1).getBytes());
+            resultOut.write(String.format("[%f %f]\n", score0, score1).getBytes());
             resultOut.close();
             network.terminate();
         } catch (Exception e) {
@@ -85,8 +85,8 @@ public class Controller {
     private void handleMessage(Message msg) {
         switch (msg.name) {
             case "status":
-                score0 = msg.args.get(0).getAsInt();
-                score1 = msg.args.get(1).getAsInt();
+                score0 = msg.args.get(1).getAsInt();
+                score1 = msg.args.get(2).getAsInt();
                 break;
             case "shutdown":
                 shutdown();
