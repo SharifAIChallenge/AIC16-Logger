@@ -68,7 +68,7 @@ public class Controller {
             }
             logOut.close();
             resultOut = new FileOutputStream(resultPath);
-            resultOut.write(String.format("[%f %f]\n", score0, score1).getBytes());
+            resultOut.write(String.format("[%f, %f]\n", score0, score1).getBytes());
             resultOut.close();
             network.terminate();
         } catch (Exception e) {
