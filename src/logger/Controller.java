@@ -6,6 +6,7 @@ import common.util.Log;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * Main controller. Controls execution of the program, e.g. checks time limit of
@@ -68,7 +69,7 @@ public class Controller {
             }
             logOut.close();
             resultOut = new FileOutputStream(resultPath);
-            resultOut.write(String.format("[%f, %f]\n", score0, score1).getBytes());
+            resultOut.write(String.format("[%f, %f]\n", score0, score1).getBytes(Charset.forName("UTF-8")));
             resultOut.close();
             network.terminate();
         } catch (Exception e) {
@@ -83,10 +84,11 @@ public class Controller {
      * @param msg incoming message
      */
     private void handleMessage(Message msg) {
+        System.err.println("message " + msg.name + " received");
         switch (msg.name) {
             case "status":
-                score0 = msg.args.get(1).getAsInt();
-                score1 = msg.args.get(2).getAsInt();
+                score0 = msg.args.get(1).getAsDouble();
+                score1 = msg.args.get(2).getAsDouble();
                 break;
             case "shutdown":
                 shutdown();
